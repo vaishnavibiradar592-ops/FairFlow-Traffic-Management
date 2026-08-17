@@ -84,9 +84,10 @@ y = data["vehicles"]
 # ==========================================
 
 model = RandomForestRegressor(
-    n_estimators=150,
+    n_estimators=50,
+    max_depth=10,
     random_state=42,
-    max_depth=15
+    n_jobs=-1
 )
 
 
