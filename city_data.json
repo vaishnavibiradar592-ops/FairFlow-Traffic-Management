@@ -1,0 +1,137 @@
+{
+  "authorities": [
+    {
+      "id": "A",
+      "name": "Authority A"
+    },
+    {
+      "id": "B",
+      "name": "Authority B"
+    },
+    {
+      "id": "C",
+      "name": "Authority C"
+    }
+  ],
+
+  "junctions": [
+    {
+      "id": "J1",
+      "lat": 21.1458,
+      "lng": 79.0882,
+      "authority": "A"
+    },
+    {
+      "id": "J2",
+      "lat": 21.1500,
+      "lng": 79.0950,
+      "authority": "A"
+    },
+    {
+      "id": "J3",
+      "lat": 21.1550,
+      "lng": 79.1020,
+      "authority": "A"
+    },
+    {
+      "id": "J4",
+      "lat": 21.1500,
+      "lng": 79.1100,
+      "authority": "B"
+    },
+    {
+      "id": "J5",
+      "lat": 21.1400,
+      "lng": 79.1100,
+      "authority": "B"
+    },
+    {
+      "id": "J6",
+      "lat": 21.1350,
+      "lng": 79.1000,
+      "authority": "C"
+    }
+  ],
+
+  "hospital": {
+    "id": "H1",
+    "name": "Demo Hospital",
+    "lat": 21.1320,
+    "lng": 79.1050
+  },
+
+  "roads": [
+    {
+      "id": "R101",
+      "from": "J1",
+      "to": "J2",
+      "capacity": 2000,
+      "length_km": 1.2,
+      "speed_kmh": 40,
+      "authority": "A"
+    },
+    {
+      "id": "R102",
+      "from": "J2",
+      "to": "J3",
+      "capacity": 1800,
+      "length_km": 1.4,
+      "speed_kmh": 35,
+      "authority": "A"
+    },
+    {
+      "id": "R103",
+      "from": "J2",
+      "to": "J4",
+      "capacity": 2200,
+      "length_km": 1.8,
+      "speed_kmh": 45,
+      "authority": "A"
+    },
+    {
+      "id": "R104",
+      "from": "J3",
+      "to": "J4",
+      "capacity": 2000,
+      "length_km": 1.5,
+      "speed_kmh": 40,
+      "authority": "B"
+    },
+    {
+      "id": "R105",
+      "from": "J4",
+      "to": "J5",
+      "capacity": 2500,
+      "length_km": 1.2,
+      "speed_kmh": 45,
+      "authority": "B"
+    },
+    {
+      "id": "R106",
+      "from": "J5",
+      "to": "J6",
+      "capacity": 2300,
+      "length_km": 1.6,
+      "speed_kmh": 40,
+      "authority": "C"
+    },
+    {
+      "id": "R107",
+      "from": "J2",
+      "to": "J6",
+      "capacity": 2600,
+      "length_km": 2.4,
+      "speed_kmh": 50,
+      "authority": "C"
+    },
+    {
+      "id": "R108",
+      "from": "J6",
+      "to": "J1",
+      "capacity": 1800,
+      "length_km": 2.0,
+      "speed_kmh": 35,
+      "authority": "C"
+    }
+  ]
+}
