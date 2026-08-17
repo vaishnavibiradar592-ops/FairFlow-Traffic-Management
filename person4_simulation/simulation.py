@@ -2,94 +2,102 @@ def load_percent(traffic, capacity):
     return round(traffic / capacity * 100, 1)
 
 
-def simulate(traffic, capacity, moves):
+def simulate(traffic, capacity, prediction):
+    predicted_road = prediction["predictedRoad"]
+    recommended_road = prediction["recommendedRoad"]
+    vehicles = prediction["vehicles"]
+
+    # Calculate BEFORE congestion
     before = {
         road: load_percent(traffic[road], capacity[road])
         for road in traffic
     }
 
+    # Copy traffic so original data is not changed
     after = traffic.copy()
 
-    for move in moves:
-        source = move["from"]
-        target = move["to"]
-        amount = move["vehicles"]
+    # Move vehicles from predicted road
+    # to recommended road
+    after[predicted_road] = max(
+        0,
+        after[predicted_road] - vehicles
+    )
 
-        after[source] = max(
-            0,
-            after[source] - amount
-        )
+    after[recommended_road] = (
+        after.get(recommended_road, 0) + vehicles
+    )
 
-        after[target] = (
-            after.get(target, 0) + amount
-        )
+    # Calculate AFTER congestion
+    after_percent = {
+        road: load_percent(after[road], capacity[road])
+        for road in traffic
+    }
 
-    result = []
-
-    for road in traffic:
-        result.append({
-            "road": road,
-            "before": before[road],
-            "after": load_percent(
-                after[road],
-                capacity[road]
-            )
-        })
-
-    return result
+    return {
+        "predictedRoad": predicted_road,
+        "recommendedRoad": recommended_road,
+        "vehiclesMoved": vehicles,
+        "before": before,
+        "after": after_percent
+    }
 
 
-def emergency(route):
+def emergency(emergency_result):
     return {
         "mode": "EMERGENCY",
-        "priority_route": route,
-        "message": "Simulated ambulance priority corridor active."
+        "vehicle": emergency_result["vehicle"],
+        "priority_route": [
+            emergency_result["start"],
+            emergency_result["recommendedRoad"],
+            emergency_result["destination"]
+        ],
+        "message": emergency_result["message"]
     }
 
 
 if __name__ == "__main__":
 
+    # Person 3 optimizer test case
+    prediction = {
+        "predictedRoad": "R104",
+        "predictedTraffic": 431,
+        "recommendedRoad": "R102",
+        "vehicles": 200
+    }
+
     traffic = {
-        "R103": 2100,
-        "R106": 900
+        "R104": 431,
+        "R102": 600
     }
 
     capacity = {
-        "R103": 2200,
-        "R106": 2300
+        "R104": 1600,
+        "R102": 2000
     }
-
-    moves = [
-        {
-            "from": "R103",
-            "to": "R106",
-            "vehicles": 300
-        }
-    ]
 
     print("BEFORE / AFTER SIMULATION")
 
     result = simulate(
         traffic,
         capacity,
-        moves
+        prediction
     )
 
-    for road in result:
-        print(
-            road["road"],
-            "Before:",
-            road["before"],
-            "%",
-            "After:",
-            road["after"],
-            "%"
-        )
+    print(result)
 
     print("\nEMERGENCY SIMULATION")
 
+    emergency_result = {
+        "emergency": True,
+        "vehicle": "AMBULANCE",
+        "start": "R101",
+        "destination": "R104",
+        "recommendedRoad": "R102",
+        "message": "Give ambulance priority on the recommended route."
+    }
+
     print(
         emergency(
-            ["J1", "J2", "J6", "H1"]
+            emergency_result
         )
     )
